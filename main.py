@@ -1,23 +1,16 @@
 from fastapi import FastAPI
 
-
-from database import engine, SessionLocal
 import models
+from router import auth
+from database import engine, SessionLocal
 
 app = FastAPI()
 
 models.Base.metadata.create_all(bind=engine)
 
-
-def get_db():
-    db = SessionLocal()
-
-    try:
-        yield db
-    finally:
-        db.close()
+app.include_router(auth.router)
 
 
-@app.get("/")
-def bootstrap():
+@app.get("/", include_in_schema=False)
+def health_check():
     return {"message": "Server is up and running..."}
