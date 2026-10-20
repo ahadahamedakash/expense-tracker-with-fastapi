@@ -12,7 +12,7 @@ class UserModel(Base):
     hashed_password = Column(String)
 
 
-class TransactionModel:
+class TransactionModel(Base):
     __tablename__ = "transactions"
 
     id = Column(Integer, primary_key=True, index=True)

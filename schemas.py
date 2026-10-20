@@ -15,3 +15,11 @@ class TransactionBase(BaseModel):
     type: Literal["income", "expense"]
     category: str = Field(min_length=1, max_length=100)
     date: date
+
+
+class UpdateTransaction(BaseModel):
+    title: str | None = Field(default=None, min_length=1, max_length=150)
+    amount: float | None = Field(default=None, gt=0)
+    category: str | None = Field(default=None, min_length=1, max_length=100)
+    type: Literal["income", "expense"] | None = None
+    date: date | None = None
