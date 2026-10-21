@@ -22,14 +22,19 @@ def get_transactions(user: UserSession, db: DBSession):
     if user is None:
         raise HTTPException(status_code=401, detail="You are unauthorized!")
 
-    return (
+    transactions = (
         db.query(TransactionModel)
         .filter(TransactionModel.owner_id == user.get("id"))
         .all()
     )
 
+    if not transactions:
+        raise HTTPException(status_code=404, detail="No transaction found!")
 
-@router.post("/transactions")
+    return transactions
+
+
+@router.post("/transactions", status_code=201)
 def add_transaction(user: UserSession, db: DBSession, data: TransactionBase):
     if user is None:
         raise HTTPException(status_code=401, detail="You are unauthorized!")
@@ -40,7 +45,9 @@ def add_transaction(user: UserSession, db: DBSession, data: TransactionBase):
     db.commit()
     db.refresh(current_data)
 
-    return JSONResponse(status_code=201, content={"message": "Added Successfully!"})
+    # return JSONResponse(status_code=201, content={"message": "Added Successfully!"})
+
+    return current_data
 
 
 @router.get("/transactions/filter")  # type category minimum_amount maximum_amount

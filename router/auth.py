@@ -101,11 +101,10 @@ def register(db: DBSession, data: UserBase):
 def login(db: DBSession, form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
 
     user = authenticate_user(form_data.username, form_data.password, db)
-    print(f"USER: ", user)
 
     if not user:
         return JSONResponse(
-            status_code=403, content={"message": "You are unauthorized!"}
+            status_code=401, content={"message": "You are unauthorized!"}
         )
 
     token = generate_access_token(user.username, user.id, timedelta(minutes=60))

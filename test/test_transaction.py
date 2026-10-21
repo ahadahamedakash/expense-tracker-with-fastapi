@@ -74,7 +74,6 @@ def test_create_transaction():
 
     response = client.post("/transactions", json=request_data)
     assert response.status_code == status.HTTP_201_CREATED
-    assert response.json() == {"message": "Added Successfully!"}
 
 
 def test_filter_transaction():
