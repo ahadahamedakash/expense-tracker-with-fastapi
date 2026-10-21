@@ -1,5 +1,5 @@
 from datetime import date
-from typing import Literal
+from typing import Literal, Optional
 from pydantic import BaseModel, EmailStr, Field
 
 
@@ -18,8 +18,8 @@ class TransactionBase(BaseModel):
 
 
 class UpdateTransaction(BaseModel):
-    title: str | None = Field(default=None, min_length=1, max_length=150)
-    amount: float | None = Field(default=None, gt=0)
-    category: str | None = Field(default=None, min_length=1, max_length=100)
-    type: Literal["income", "expense"] | None = None
-    date: date | None = None
+    title: Optional[str] = Field(default=None, min_length=1, max_length=150)
+    amount: Optional[float] = Field(default=None, gt=0)
+    category: Optional[str] = Field(default=None, min_length=1, max_length=100)
+    type: Optional[Literal["income", "expense"]] = None
+    date: Optional[date] = None
