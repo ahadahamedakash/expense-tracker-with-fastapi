@@ -20,7 +20,7 @@ from database import get_db
 router = APIRouter()
 
 bcrypt_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-oauth2_bearer = OAuth2PasswordBearer(tokenUrl="login")
+oauth2_bearer = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
 SECRET_KEY = "f947ed70fb914dff44e23f83f3abfbddd1ed14316d29126d9e4ed484a37e70c1"
 ALGORITHM = "HS256"
@@ -109,4 +109,4 @@ def login(db: DBSession, form_data: Annotated[OAuth2PasswordRequestForm, Depends
 
     token = generate_access_token(user.username, user.id, timedelta(minutes=60))
 
-    return {"access_token": token, "token_type": "Bearer"}
+    return {"access_token": token, "token_type": "bearer"}

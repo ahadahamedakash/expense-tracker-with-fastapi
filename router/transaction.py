@@ -95,9 +95,6 @@ def get_transaction_by_id(transaction_id: int, user: UserSession, db: DBSession)
         .first()
     )
 
-    if transaction is None:
-        raise HTTPException(status_code=404, detail="Transaction not found!")
-
     return transaction
 
 
